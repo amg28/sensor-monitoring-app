@@ -99,8 +99,8 @@ export default function Navigation({ pageTitle }) {
 
     const navigationLinks = [
         { label: 'Data Overview', link: 'sensor-monitoring-app/', icon: <BarChartIcon /> },
-        { label: 'Building Plan', link: 'sensor-monitoring-app/plan', icon: <DomainIcon /> },
-        { label: 'Warnings', link: 'sensor-monitoring-app/warnings', icon: <WarningIcon /> }
+        { label: 'Building Plan', link: '/plan', icon: <DomainIcon /> },
+        { label: 'Warnings', link: '/warnings', icon: <WarningIcon /> }
     ];
 
     return (
