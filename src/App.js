@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/plan">
             <BuildingPlan />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <DataOverview />
           </Route>
         </Switch>
