@@ -98,7 +98,7 @@ export default function Navigation({ pageTitle }) {
     };
 
     const navigationLinks = [
-        { label: 'Data Overview', link: 'sensor-monitoring-app/', icon: <BarChartIcon /> },
+        { label: 'Data Overview', link: '/', icon: <BarChartIcon /> },
         { label: 'Building Plan', link: '/plan', icon: <DomainIcon /> },
         { label: 'Warnings', link: '/warnings', icon: <WarningIcon /> }
     ];
