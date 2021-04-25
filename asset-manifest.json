@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/sensor-monitoring-app/static/css/main.2ae47eeb.chunk.css",
-    "main.js": "/sensor-monitoring-app/static/js/main.463fb0c6.chunk.js",
-    "main.js.map": "/sensor-monitoring-app/static/js/main.463fb0c6.chunk.js.map",
+    "main.js": "/sensor-monitoring-app/static/js/main.78792967.chunk.js",
+    "main.js.map": "/sensor-monitoring-app/static/js/main.78792967.chunk.js.map",
     "runtime-main.js": "/sensor-monitoring-app/static/js/runtime-main.63bcc389.js",
     "runtime-main.js.map": "/sensor-monitoring-app/static/js/runtime-main.63bcc389.js.map",
     "static/js/2.5acacdd9.chunk.js": "/sensor-monitoring-app/static/js/2.5acacdd9.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.63bcc389.js",
     "static/js/2.5acacdd9.chunk.js",
     "static/css/main.2ae47eeb.chunk.css",
-    "static/js/main.463fb0c6.chunk.js"
+    "static/js/main.78792967.chunk.js"
   ]
 }
