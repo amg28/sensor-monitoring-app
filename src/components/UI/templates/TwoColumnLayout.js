@@ -6,16 +6,15 @@ import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        marginTop: '80px',
-        marginLeft: '90px',
-        marginRight: '20px'
-        
     },
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
         minHeight: '300px'
+    },
+    leftOffset: {
+        paddingLeft: "70px"
     }
 }));
 
@@ -24,12 +23,11 @@ export default function TwoColumnLayout({ contentLeft, contentRight }) {
 
     return (
         <div className={classes.root}>
-            <Grid container spacing={3}>
-                <Grid item xs={6}>
+            <Grid container spacing={3} className={classes.leftOffset}>
+                <Grid item md={6} xs={12}>
                 {contentLeft.map((component) => <Paper className={classes.paper}>{component}</Paper>)}
-                    
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                     <Paper className={classes.paper}>{contentRight}</Paper>
                 </Grid>
             </Grid>

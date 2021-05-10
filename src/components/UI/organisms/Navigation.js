@@ -18,7 +18,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import DomainIcon from '@material-ui/icons/Domain';
 import WarningIcon from '@material-ui/icons/Warning';
-import { Link } from "react-router-dom";
+
+import MyChart from '../atoms/MyChart';
+import InputForm from '../molecules/InputForm';
 
 const drawerWidth = 240;
 
@@ -70,24 +72,39 @@ const useStyles = makeStyles((theme) => ({
             width: theme.spacing(9) + 1,
         },
     },
-    toolbar: {
+
+    drawerHeader: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end',
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
-    },
+        justifyContent: 'flex-end',
+      },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-    },
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: -drawerWidth,
+      },
+      contentShift: {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+      },
 }));
 
 export default function Navigation({ pageTitle }) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const component1 = [(<InputForm />)];
+    const component2 = [(<MyChart />)];
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -158,6 +175,12 @@ export default function Navigation({ pageTitle }) {
                     ))}
                 </List>
             </Drawer>
+            {/* <main className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}>
+            <div className={classes.drawerHeader} />
+                <TwoColumnLayout contentLeft={component1} contentRight={component2}  />
+            </main> */}
         </div>
     );
 }
