@@ -10,13 +10,13 @@ function Routing() {
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
-            <Route path="/warnings">
+            <Route path="sensor-monitoring-app/warnings">
               <Warnings />
             </Route>
-            <Route path="/plan">
+            <Route path="sensor-monitoring-app/plan">
               <BuildingPlan />
             </Route>
-            <Route path="/">
+            <Route path="sensor-monitoring-app/">
               <DataOverview />
             </Route>
           </Switch>
