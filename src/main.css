@@ -1,0 +1,26 @@
+
+
+.map {
+    position: relative;
+    text-align: center;
+}
+
+svg {
+    position: absolute;
+    height: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
+.part {
+    fill: rgba(0, 162, 255, 0.667);
+    opacity: 0.3;
+}
+
+.part:hover {
+    transition: opacity .2s ease;
+    fill: rgba(255, 76, 165, 0.667);
+    opacity: 0.5;
+}
