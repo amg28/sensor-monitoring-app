@@ -9,12 +9,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
+import { useDispatch } from 'react-redux';
+import { updateRoomId } from '../../../store/roomsSlice';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 250,
-    maxWidth: 300,
+    display: 'flex'
   },
   chips: {
     display: 'flex',
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   noLabel: {
     marginTop: theme.spacing(3),
   },
+  checkbox: {
+    marginRight: '10px'
+  }
 }));
 
 const ITEM_HEIGHT = 55;
@@ -39,26 +43,18 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Room 1',
-  'Room 2',
-  'Room 3',
-  'Room 4',
-  'Room 5',
-  'Room 6',
-  'Room 7',
-  'Room 8',
-  'Room 9',
-  'Room 10',
-];
-
-export default function RoomSelect() {
+export default function RoomSelect({rooms}) {
   const classes = useStyles();
-  const [personName, setPersonName] = React.useState([]);
+  const [selectedRooms, setSelectedRooms] = React.useState([]);
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    setPersonName(event.target.value);
+    setSelectedRooms(event.target.value);
   };
+
+  React.useEffect(() => {
+    dispatch(updateRoomId(selectedRooms))
+  }, [dispatch, selectedRooms])
 
   return (
     <div>
@@ -68,7 +64,7 @@ export default function RoomSelect() {
           labelId="demo-mutiple-chip-label"
           id="demo-mutiple-chip"
           multiple
-          value={personName}
+          value={selectedRooms}
           onChange={handleChange}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => (
@@ -80,9 +76,9 @@ export default function RoomSelect() {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {rooms.map((name) => (
             <MenuItem key={name} value={name}>
-              <Checkbox checked={personName.indexOf(name) > -1} />
+              <Checkbox className={classes.checkbox} checked={selectedRooms.indexOf(name) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
           ))}

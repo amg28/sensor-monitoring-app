@@ -1,21 +1,28 @@
 import { FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core'
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { updateSensorType } from '../../../store/roomsSlice';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(3),
-        minWidth: 250,
+        margin: theme.spacing(1),
+        display: 'flex'
     }
 }));
 
 function MeasurementSelect() {
 
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const [measurement, setMeasurement] = React.useState('');
+    const dispatch = useDispatch();
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setMeasurement(event.target.value);
     };
+
+    React.useEffect(() => {
+        dispatch(updateSensorType(measurement))
+    }, [dispatch, measurement])
 
     return (
         <>
@@ -24,17 +31,14 @@ function MeasurementSelect() {
                 <Select
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
-                    value={age}
+                    value={measurement}
                     onChange={handleChange}
-                    options={['C02', 'Temperature', 'Moisture']}
+                    options={['carbonDioxideSensor', 'temperatureSensor', 'humiditySensor']}
                     label="Select Measurement"
                 >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={'C02'}>C02</MenuItem>
-                    <MenuItem value={'Temperature'}>Temperature</MenuItem>
-                    <MenuItem value={'Moisture'}>Moisture</MenuItem>
+                    <MenuItem value={'carbonDioxideSensor'}>Carbon Dioxide</MenuItem>
+                    <MenuItem value={'temperatureSensor'}>Temperature</MenuItem>
+                    <MenuItem value={'humiditySensor'}>Humidity</MenuItem>
                 </Select>
             </FormControl>
         </>

@@ -9,13 +9,12 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '80px',
         marginLeft: '90px',
         marginRight: '20px'
-        
     },
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-        minHeight: '300px'
+        height: '100%'
     }
 }));
 
@@ -25,11 +24,11 @@ export default function TwoColumnLayout({ contentLeft, contentRight }) {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                 {contentLeft.map((component) => <Paper className={classes.paper}>{component}</Paper>)}
                     
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                     <Paper className={classes.paper}>{contentRight}</Paper>
                 </Grid>
             </Grid>
