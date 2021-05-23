@@ -1,11 +1,11 @@
-import { Divider, makeStyles } from '@material-ui/core';
-import { findByLabelText } from '@testing-library/dom';
+import { Button, Divider, makeStyles } from '@material-ui/core';
 import React from 'react'
 import MeasurementSelect from '../atoms/MeasurementSelect'
 import TimeInput from '../atoms/TimeInput'
 import RoomSelect from '../atoms/RoomSelect'
-import { useSelector } from 'react-redux';
-import { roomsSelector, updateFromDateTime, updateToDateTime } from '../../../store/roomsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSensor, roomsSelector, updateFromDateTime, updateToDateTime } from '../../../store/roomsSlice';
+import PrecisionSelect from '../atoms/PrecisionSelect';
 
 const useStyles = makeStyles((theme) => ({
     timeContainer: {
@@ -16,11 +16,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function InputForm({rooms}) {
+function InputForm() {
 
     const classes = useStyles();
     const roomsData = useSelector(roomsSelector);
+    const dispatch = useDispatch();
     const roomsList = roomsData ? roomsData.map((room) => room.roomName).sort() : [];
+
+    const handleClick = () => dispatch(fetchSensor());
 
     return (
         <div className={classes.timeContainer}>
@@ -30,7 +33,11 @@ function InputForm({rooms}) {
             <Divider />
             <MeasurementSelect />
             <Divider />
-            <RoomSelect rooms={roomsList} />
+            <RoomSelect roomsData={roomsData} rooms={roomsList} />
+            <Divider />
+            <PrecisionSelect />
+            <Divider />
+            <Button onClick={handleClick}>Update chart</Button>
         </div>
     )
 }

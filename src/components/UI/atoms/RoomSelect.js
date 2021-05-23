@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import { useDispatch } from 'react-redux';
-import { updateRoomId } from '../../../store/roomsSlice';
+import { updateRoomId, updateSelectedRooms } from '../../../store/roomsSlice';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -43,7 +43,7 @@ const MenuProps = {
   },
 };
 
-export default function RoomSelect({rooms}) {
+export default function RoomSelect({rooms, roomsData}) {
   const classes = useStyles();
   const [selectedRooms, setSelectedRooms] = React.useState([]);
   const dispatch = useDispatch();
@@ -53,7 +53,8 @@ export default function RoomSelect({rooms}) {
   };
 
   React.useEffect(() => {
-    dispatch(updateRoomId(selectedRooms))
+    const selectedRoomsData = roomsData.filter((room) => selectedRooms.includes(room.roomName));
+    dispatch(updateSelectedRooms(selectedRoomsData))
   }, [dispatch, selectedRooms])
 
   return (

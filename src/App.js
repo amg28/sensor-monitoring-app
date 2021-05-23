@@ -2,13 +2,11 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import BuildingPlan from "./components/pages/BuildingPlan";
 import DataOverview from "./components/pages/DataOverview";
 import Warnings from "./components/pages/Warnings";
-import Navigation from "./components/UI/organisms/Navigation"
 
 export default function App() {
   return (

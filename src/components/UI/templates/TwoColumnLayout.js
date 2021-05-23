@@ -24,11 +24,10 @@ export default function TwoColumnLayout({ contentLeft, contentRight }) {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid item xs={4}>
+                <Grid key="left-column" item xs={4}>
                 {contentLeft.map((component) => <Paper className={classes.paper}>{component}</Paper>)}
-                    
                 </Grid>
-                <Grid item xs={8}>
+                <Grid key="right-column" item xs={8}>
                     <Paper className={classes.paper}>{contentRight}</Paper>
                 </Grid>
             </Grid>

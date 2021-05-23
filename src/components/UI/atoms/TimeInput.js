@@ -21,12 +21,16 @@ function TimeInput({label, dispatchAction}) {
                 id="datetime-local"
                 label={label}
                 type="datetime-local"
-                defaultValue="2021-05-01T10:30"
+                defaultValue="2020-01-01T10:30"
                 className={classes.textField}
                 InputLabelProps={{
                     shrink: true,
                 }}
-                onChange={(e) => dispatch(dispatchAction(e.target.value))}
+                onChange={(e) => {
+                    const formatedDate = encodeURIComponent(new Date(e.target.value).toISOString());
+                    console.log(formatedDate, 'formatedDate');
+                    dispatch(dispatchAction(formatedDate))
+                }}
             />
         </div>
     )
