@@ -16,11 +16,23 @@ export const fetchRooms = createAsyncThunk('rooms/fetch', async () => {
     return response.data;
 })
 
-export const fetchSensor = createAsyncThunk('sensors/fetch', async (dispatch, {getState}) => {
+export const fetchSensor = createAsyncThunk('sensors/fetch', async (dispatch, { getState }) => {
     const store = getState();
-    const {sensorType, dateTimeFrom, dateTimeTo} = store.rooms;
-    const response = await axios.get(`/sensorValues?sensorType=${sensorType}&dateTimeFrom=${dateTimeFrom}&dateTimeTo=${dateTimeTo}&roomId=60a2d9c145e9ba001d543749`)
-    return response.data;
+    const { sensorType, dateTimeFrom, dateTimeTo, selectedRooms } = store.rooms;
+ 
+    const resultData = [];
+    for(let room of selectedRooms){
+        const request = axios.get(`/sensorValues?sensorType=${sensorType}&dateTimeFrom=${dateTimeFrom}&dateTimeTo=${dateTimeTo}&roomId=${room._id}`);
+        const {data: requestData} = await request;
+        resultData.push({[room.roomName] : [requestData]});
+    }
+    // const roomOne = axios.get(`/sensorValues?sensorType=${sensorType}&dateTimeFrom=${dateTimeFrom}&dateTimeTo=${dateTimeTo}&roomId=${selectedRooms[0]._id}`);
+    // const roomTwo = axios.get(`/sensorValues?sensorType=${sensorType}&dateTimeFrom=${dateTimeFrom}&dateTimeTo=${dateTimeTo}&roomId=${selectedRooms[1]._id}`);
+
+    // const {data: roomOneData} = await roomOne;
+    // const {data: roomTwoData} = await roomTwo;
+
+    return resultData;
 })
 
 const roomsSlice = createSlice({
@@ -28,36 +40,36 @@ const roomsSlice = createSlice({
     initialState,
     reducers: {
         updateSensorType(state, action) {
-            return { ...state, sensorType: action.payload}
+            return { ...state, sensorType: action.payload }
         },
 
         updateFromDateTime(state, action) {
-            return { ...state, dateTimeFrom: action.payload}
+            return { ...state, dateTimeFrom: action.payload }
         },
 
         updateToDateTime(state, action) {
-            return { ...state, dateTimeTo: action.payload}
+            return { ...state, dateTimeTo: action.payload }
         },
 
         updateSelectedRooms(state, action) {
-            return { ...state, selectedRooms: action.payload}
+            return { ...state, selectedRooms: action.payload }
         },
 
         updatePrecision(state, action) {
-            return {...state, precision: action.payload}
+            return { ...state, precision: action.payload }
         }
     },
     extraReducers: {
         [fetchRooms.fulfilled]: (state, action) => {
-          return {...state, roomsData: action.payload}
+            return { ...state, roomsData: action.payload }
         },
         [fetchSensor.fulfilled]: (state, action) => {
-            return {...state, sensorsData: action.payload}
-          }
+            return { ...state, sensorsData: action.payload }
+        }
     }
 })
 
-export const {updateSensorType, updateFromDateTime, updateToDateTime, updateSelectedRooms, updatePrecision} = roomsSlice.actions
+export const { updateSensorType, updateFromDateTime, updateToDateTime, updateSelectedRooms, updatePrecision } = roomsSlice.actions
 export const roomsSelector = (state) => state.rooms.roomsData;
 export const selectedRoomsSelector = (state) => state.rooms.selectedRooms;
 export const sensorDataSelector = (state) => state.rooms.sensorsData;

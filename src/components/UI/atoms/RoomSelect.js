@@ -49,7 +49,7 @@ export default function RoomSelect({rooms, roomsData}) {
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    setSelectedRooms(event.target.value);
+    setSelectedRooms(event.target.value.sort());
   };
 
   React.useEffect(() => {
