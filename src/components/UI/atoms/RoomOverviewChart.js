@@ -4,19 +4,14 @@ import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { precisionSelector, sensorDataSelector } from '../../../store/roomsSlice';
 
-function MyChart({label}) {
+function MyChart({label, sensorData}) {
 
-    // {
-    //     "_id": "60a2db5945e9ba001d5498b7",
-    //     "value": "1243",
-    //     "sensorId": "500",
-    //     "dateTime": "2020-01-16T08:08:35.000Z"
-    // }
-
-    const sensorData = useSelector(sensorDataSelector);
     const precision = useSelector(precisionSelector);
 
-    const newSensorData = sensorData.map((sensor) => Object.assign({}, {...sensor, dateTime: moment(sensor.dateTime).format(precision === 'days' ? "MM-DD" : "MM-DD HH:00")}));
+    console.log(label, 'label');
+    console.log(sensorData, 'sensorData');
+
+    const newSensorData = sensorData.flat().map((sensor) => Object.assign({}, {...sensor, dateTime: moment(sensor.dateTime).format(precision === 'days' ? "MM-DD" : "MM-DD HH:00")}));
     const labels = newSensorData ? [...new Set(newSensorData.map((sensor) => sensor.dateTime).sort())] : [];
 
     let data = {
