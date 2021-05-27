@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import floor1Plan from "../media/1floor-final.png"
+import '../../../main.css';
 
 function Floor1() {
     return (

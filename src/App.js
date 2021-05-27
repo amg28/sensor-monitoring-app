@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import BuildingPlan from "./components/pages/BuildingPlan";
 import DataOverview from "./components/pages/DataOverview";
+import RoomList from "./components/pages/RoomList";
+import SensorList from "./components/pages/SensorList";
 import Warnings from "./components/pages/Warnings";
 
 export default function App() {
@@ -17,6 +19,12 @@ export default function App() {
         <Switch>
           <Route path="/warnings">
             <Warnings />
+          </Route>
+          <Route path="/rooms">
+            <RoomList />
+          </Route>
+          <Route path="/sensors-list">
+            <SensorList />
           </Route>
           <Route path="/plan">
             <BuildingPlan />

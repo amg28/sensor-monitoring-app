@@ -27,9 +27,9 @@ function InputForm() {
 
     return (
         <div className={classes.timeContainer}>
-            <TimeInput label="From" dispatchAction={updateFromDateTime} />
+            <TimeInput label="From" dispatchAction={updateFromDateTime} defaultDate={"2020-01-01T10:30"} />
             <Divider />
-            <TimeInput label="To" dispatchAction={updateToDateTime} />
+            <TimeInput label="To" dispatchAction={updateToDateTime} defaultDate={"2020-01-15T10:30"} />
             <Divider />
             <MeasurementSelect />
             <Divider />

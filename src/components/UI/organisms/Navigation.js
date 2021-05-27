@@ -17,8 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import DomainIcon from '@material-ui/icons/Domain';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import SurroundSoundIcon from '@material-ui/icons/SurroundSound';
 import WarningIcon from '@material-ui/icons/Warning';
-import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -100,6 +101,8 @@ export default function Navigation({ pageTitle }) {
     const navigationLinks = [
         { label: 'Data Overview', link: '/', icon: <BarChartIcon /> },
         { label: 'Building Plan', link: '/plan', icon: <DomainIcon /> },
+        { label: 'Rooms', link: '/rooms', icon: <MeetingRoomIcon /> },
+        { label: 'Sensors', link: '/sensors-list', icon: <SurroundSoundIcon /> },
         { label: 'Warnings', link: '/warnings', icon: <WarningIcon /> }
     ];
 

@@ -1,5 +1,5 @@
 import { makeStyles, TextField } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,27 +10,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function TimeInput({label, dispatchAction}) {
+function TimeInput({ label, dispatchAction, defaultDate }) {
 
     const classes = useStyles();
     const dispatch = useDispatch()
 
+    const formatDate = (date) => encodeURIComponent(new Date(date).toISOString());
+
+    useEffect(() => {
+        dispatch(dispatchAction(formatDate(defaultDate)))
+    }, [dispatch, defaultDate, dispatchAction])
+
     return (
         <div>
             <TextField
-                id="datetime-local"
+                id={`datetime-local-${label}`}
                 label={label}
                 type="datetime-local"
-                defaultValue="2020-01-01T10:30"
+                defaultValue={defaultDate}
                 className={classes.textField}
                 InputLabelProps={{
                     shrink: true,
                 }}
-                onChange={(e) => {
-                    const formatedDate = encodeURIComponent(new Date(e.target.value).toISOString());
-                    console.log(formatedDate, 'formatedDate');
-                    dispatch(dispatchAction(formatedDate))
-                }}
+                onChange={(e) => dispatch(dispatchAction(formatDate(e.target.value)))}
             />
         </div>
     )
