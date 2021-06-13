@@ -16,7 +16,7 @@ function MyChart() {
 
     function randomInteger(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
+    }
 
     function createDataset(label, data){
         return {
@@ -32,7 +32,6 @@ function MyChart() {
             }
         }
     }
-
 
     const sensorData = useSelector(sensorDataSelector);
     const precision = useSelector(precisionSelector);

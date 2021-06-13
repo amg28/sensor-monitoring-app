@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Navigation from '../UI/organisms/Navigation'
-import { DataGrid } from '@material-ui/data-grid'
+import { DataGrid, useGridApiRef } from '@material-ui/data-grid'
 import FullPageLayout from '../UI/templates/FullPageLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchRooms, roomsSelector } from '../../store/roomsSlice'
@@ -24,9 +24,11 @@ function RoomList() {
     const dispatch = useDispatch();
     const roomsData = useSelector(roomsSelector);
 
+    console.log(roomsData,'roomsData')
+
     useEffect(() => {
         dispatch(fetchRooms())
-    }, [])
+    }, [dispatch])
 
     const colorPick = (sensorType) => {
         switch (sensorType) {
@@ -46,11 +48,10 @@ function RoomList() {
             </div>));
     }
 
-    const rows = roomsData.map((room) => {
+    const rows = roomsData.map(({ _id, ...otherRoomProps }) => {
         //Mapping issue fix: DataGrid requires 'id' paramter on each row, but API returns '_id'
-        const { _id, ...otherRoomProps } = room;
         return { id: _id, ...otherRoomProps };
-    })
+    });
 
     const columns = [
         { field: 'id', headerName: 'Id', flex: 1 },

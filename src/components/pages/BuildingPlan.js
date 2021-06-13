@@ -93,33 +93,20 @@ function BuildingPlan() {
     },
   ];
 
-  switch (actualFloor) {
-    case "floor1":
-      dispatch(updateActualFloor(floor1));
-      break;
-    case "floor2":
-      dispatch(updateActualFloor(floor2));
-      break;
-    default:
-      dispatch(updateActualFloor(floor1));
-  }
-
-  console.log("Actual floor: " + state?.floor);
-  console.log("Actual room: " + state?.room);
-
   return (
     <div>
       <Navigation pageTitle="Building Plan" />
       <FloorNav onFloorSelect={(floor) => setState({ floor })} />
+
       <OneRowLayout
-        floorPlan={actualFloor}
+        floorPlan={actualFloor ? floor2 : floor1}
         info={
           <>
             Room name: {state?.room}
             <DataGrid rows={rows} columns={columns} autoHeight />
           </>
         }
-        component3={
+         component3={
           <>
             Room name: {state?.room}
             <Paper className={classes.paper}>{component3}</Paper>

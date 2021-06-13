@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { useDispatch, useSelector } from "react-redux";
+import { actualFloorSelector, updateActualFloor } from "../../../store/roomsSlice";
 
 const useStyles = makeStyles({
   root: {
@@ -15,22 +17,17 @@ const useStyles = makeStyles({
 
 function FloorNav(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch();
+  const actualFloor = useSelector(actualFloorSelector);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-    if (newValue !== 0 ) {
-        props.onFloorSelect('floor2');
-    } else {
-        props.onFloorSelect("floor1");
-    }
+    dispatch(updateActualFloor(newValue));
   };
-  
 
   return (
     <Paper className={classes.root}>
       <Tabs
-        value={value}
+        value={actualFloor}
         onChange={handleChange}
         indicatorColor="primary"
         textColor="primary"

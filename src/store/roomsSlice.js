@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from 'axios'
+import Floor1 from "../components/UI/atoms/Floor1"
 
 const initialState = {
     sensorType: '',
@@ -9,7 +10,7 @@ const initialState = {
     roomsData: [],
     sensorsData: [],
     precision: 'days',
-    actualFloor: 'floor1'
+    actualFloor: 0
 }
 
 export const fetchRooms = createAsyncThunk('rooms/fetch', async () => {

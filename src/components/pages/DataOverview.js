@@ -24,7 +24,7 @@ function DataOverview() {
     return (
         <div>
             <Navigation pageTitle="Data Overview" />
-            <TwoColumnLayout contentLeft={component1} contentRight={component2}  />
+            <TwoColumnLayout contentLeft={component1} contentRight={component2} columnSizeLeft={4} columnSizeRight={8}  />
             <ChartComparision />
         </div>
     )

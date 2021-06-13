@@ -1,17 +1,17 @@
+import { Typography } from '@material-ui/core'
+import { DataGrid } from '@material-ui/data-grid'
 import React, { useEffect } from 'react'
-import Navigation from '../UI/organisms/Navigation'
-import { DataGrid } from '@material-ui/data-grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRooms, roomsSelector } from '../../store/roomsSlice';
-import FullPageLayout from '../UI/templates/FullPageLayout';
+import { roomsSelector } from '../../../store/roomsSlice';
+import { fetchWarnings } from '../../../store/warningsSlice';
 
-function SensorList() {
+function WarningsOverview() {
 
     const dispatch = useDispatch();
     const sensorData = useSelector(roomsSelector);
 
     useEffect(() => {
-        dispatch(fetchRooms())
+        dispatch(fetchWarnings())
     }, [dispatch])
 
     const rows = sensorData.map(({ sensors, roomName }) => {
@@ -29,12 +29,10 @@ function SensorList() {
 
     return (
         <div>
-            <Navigation pageTitle="Sensors" />
-            <div style={{ height: 300, width: '100%' }}>
-                <FullPageLayout component={<DataGrid rows={rows} columns={columns} autoHeight />} />
-            </div>
+            <Typography variant="h4" strong>Configuration</Typography>
+            <DataGrid rows={rows} columns={columns} autoHeight />
         </div>
     )
 }
 
-export default SensorList
+export default WarningsOverview

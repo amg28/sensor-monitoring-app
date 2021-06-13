@@ -18,16 +18,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function TwoColumnLayout({ contentLeft, contentRight }) {
+export default function TwoColumnLayout({ contentLeft, contentRight, columnSizeLeft, columnSizeRight }) {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid key="left-column" item xs={4}>
+                <Grid key="left-column" item xs={columnSizeLeft}>
                 {contentLeft.map((component) => <Paper className={classes.paper}>{component}</Paper>)}
                 </Grid>
-                <Grid key="right-column" item xs={8}>
+                <Grid key="right-column" item xs={columnSizeRight}>
                     <Paper className={classes.paper}>{contentRight}</Paper>
                 </Grid>
             </Grid>

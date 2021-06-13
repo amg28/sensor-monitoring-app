@@ -34,7 +34,7 @@ function ChartComparision() {
                 Rooms overview
             </Typography>
             <Grid container spacing={5}>
-                {/* {sensorData.slice().reverse().map((room) => (<Grid item xs={6}><Paper><RoomOverviewChart label={Object.keys(room)[0]} sensorData={room[Object.keys(room)[0]]}></RoomOverviewChart></Paper></ Grid>))} */}
+                {sensorData.slice().reverse().map((room) => (<Grid item xs={6}><Paper><RoomOverviewChart label={Object.keys(room)[0]} sensorData={room[Object.keys(room)[0]]}></RoomOverviewChart></Paper></ Grid>))}
             </Grid>
         </div>
     )
