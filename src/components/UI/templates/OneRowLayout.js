@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function OneRowLayout({floorPlan}) {
+export default function OneRowLayout({floorPlan, info, component3}) {
     const classes = useStyles();
 
     return (
@@ -29,7 +29,8 @@ export default function OneRowLayout({floorPlan}) {
               {floorPlan.map((component) => <Paper className={classes.paper}>{component}</Paper>)}
             </Grid>
             <Grid item xs={5}>
-              <Paper className={classes.paper}><h1>Info</h1></Paper>
+            <Paper className={classes.paper}><h1>Info</h1>{info}</Paper>
+            <Paper className={classes.paper}><h1>Add Sensor</h1>{component3}</Paper>
             </Grid>
           </Grid>
         </div>

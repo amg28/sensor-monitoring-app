@@ -34,7 +34,7 @@ function MeasurementSelect() {
                     value={measurement}
                     onChange={handleChange}
                     options={['carbonDioxideSensor', 'temperatureSensor', 'humiditySensor']}
-                    label="Select Measurement"
+                    label="Select Sensor"
                 >
                     <MenuItem value={'carbonDioxideSensor'}>Carbon Dioxide</MenuItem>
                     <MenuItem value={'temperatureSensor'}>Temperature</MenuItem>

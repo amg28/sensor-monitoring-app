@@ -8,12 +8,24 @@ const initialState = {
     selectedRooms: [],
     roomsData: [],
     sensorsData: [],
-    precision: 'days'
+    precision: 'days',
+    actualFloor: 'floor1'
 }
 
 export const fetchRooms = createAsyncThunk('rooms/fetch', async () => {
     const response = await axios.get('/sensors')
     return response.data;
+})
+
+export const addNewSensor = createAsyncThunk('sensors', async (dispatch, { getState }) => {
+    const store = getState();
+    const { sensorType, selectedRooms } = store.rooms;
+ 
+    const resultData = [];
+    for(let room of selectedRooms){
+        const request = axios.post(`/sensorValues?sensorType=${sensorType}&roomId=${room._id}`);
+        const {data: requestData} = await request;
+    }
 })
 
 export const fetchSensor = createAsyncThunk('sensors/fetch', async (dispatch, { getState }) => {
@@ -57,6 +69,10 @@ const roomsSlice = createSlice({
 
         updatePrecision(state, action) {
             return { ...state, precision: action.payload }
+        },
+
+        updateActualFloor(state, action) {
+            return { ...state, actualFloor: action.payload }
         }
     },
     extraReducers: {
@@ -69,9 +85,10 @@ const roomsSlice = createSlice({
     }
 })
 
-export const { updateSensorType, updateFromDateTime, updateToDateTime, updateSelectedRooms, updatePrecision } = roomsSlice.actions
+export const { updateSensorType, updateFromDateTime, updateToDateTime, updateSelectedRooms, updatePrecision, updateActualFloor } = roomsSlice.actions
 export const roomsSelector = (state) => state.rooms.roomsData;
 export const selectedRoomsSelector = (state) => state.rooms.selectedRooms;
 export const sensorDataSelector = (state) => state.rooms.sensorsData;
 export const precisionSelector = (state) => state.rooms.precision;
+export const actualFloorSelector = (state) => state.rooms.actualFloor;
 export default roomsSlice.reducer
