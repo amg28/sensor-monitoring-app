@@ -30,12 +30,19 @@ function ChartComparision() {
 
     return (
         <div className={classes.root}>
-            <Typography variant="h4" gutterBottom className={classes.title}>
-                Rooms overview
-            </Typography>
-            <Grid container spacing={5}>
-                {sensorData.slice().reverse().map((room) => (<Grid item xs={6}><Paper><RoomOverviewChart label={Object.keys(room)[0]} sensorData={room[Object.keys(room)[0]]}></RoomOverviewChart></Paper></ Grid>))}
-            </Grid>
+            {sensorData != 0 ? (
+                <>
+                    <Typography variant="h4" gutterBottom className={classes.title}>
+                        Rooms overview
+                    </Typography>
+                    <Typography variant="h6" gutterBottom className={classes.title}>
+                        Shows raw data for each room without grouping
+                    </Typography>
+                    <Grid container spacing={5}>
+                        {sensorData.slice().reverse().map((room) => (<Grid item xs={6}><Paper><RoomOverviewChart label={Object.keys(room)[0]} sensorData={room[Object.keys(room)[0]]}></RoomOverviewChart></Paper></ Grid>))}
+                    </Grid>
+                </>) : <></>}
+
         </div>
     )
 }

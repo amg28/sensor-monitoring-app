@@ -24,7 +24,7 @@ export default function FullPageLayout({ component }) {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid key="right-column" item xs={12}>
+                <Grid key="full-page-layout" item xs={12}>
                     <Paper className={classes.paper}>{component}</Paper>
                 </Grid>
             </Grid>

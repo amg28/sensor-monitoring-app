@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Navigation from '../UI/organisms/Navigation'
-import { DataGrid, useGridApiRef } from '@material-ui/data-grid'
+import { DataGrid } from '@material-ui/data-grid'
 import FullPageLayout from '../UI/templates/FullPageLayout'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchRooms, roomsSelector } from '../../store/roomsSlice'
-import { Chip, makeStyles, Tooltip } from '@material-ui/core'
+import { addRoom, fetchRooms, roomsSelector } from '../../store/roomsSlice'
+import { Chip, DialogContent, DialogContentText, makeStyles, TextField, Tooltip } from '@material-ui/core'
 import { green, orange, pink, blue } from '@material-ui/core/colors';
 import SurroundSoundIcon from '@material-ui/icons/SurroundSound';
+import { Button } from '@material-ui/core'
+import { Dialog } from '@material-ui/core'
+import { DialogTitle } from '@material-ui/core'
+import { DialogActions } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     chips: {
@@ -17,12 +21,18 @@ const useStyles = makeStyles((theme) => ({
             margin: theme.spacing(0.5),
         },
     },
+    addRoom: {
+        display: 'flex',
+        marginTop: '10px'
+    }
 }));
 
 function RoomList() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const roomsData = useSelector(roomsSelector);
+    const [open, setOpen] = React.useState(false);
+    const newRoomNameRef = useRef(null)
 
     console.log(roomsData,'roomsData')
 
@@ -59,10 +69,41 @@ function RoomList() {
         { field: 'sensors', headerName: 'Sensors', flex: 1, sortable: false, renderCell: renderSensor },
     ];
 
+    const handleDialogSubmit = () => {
+        dispatch(addRoom({roomName: newRoomNameRef.current.value, sensors: []}));
+        setOpen(false);
+        dispatch(fetchRooms());
+    }
+
     return (
         <div>
             <Navigation pageTitle="Rooms" />
-            <FullPageLayout component={<DataGrid rows={rows} columns={columns} autoHeight />} />
+            <FullPageLayout component={(<><DataGrid rows={rows} columns={columns} autoHeight /><Button className={classes.addRoom} variant="contained" color="primary" onClick={() => setOpen(true)}>Add new Room</Button></>)} />
+            <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
+                <DialogTitle id="add-new-room-title">Add Room</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    To add new Room please fill following fields:
+                </DialogContentText>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Room name"
+                    type="text"
+                    fullWidth
+                    inputRef={newRoomNameRef}
+                />
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={() => setOpen(false)} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={() => handleDialogSubmit()} color="primary">
+                    Add
+                </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

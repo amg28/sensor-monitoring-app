@@ -3,6 +3,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { precisionSelector, sensorDataSelector } from '../../../store/roomsSlice';
+import _ from 'lodash';
 
 function MyChart() {
 
@@ -39,10 +40,38 @@ function MyChart() {
 
     const datasets = sensorData.map((sensor) => {
         const label = Object.keys(sensor)[0];
-        const sesnorData = sensor[label].map((sensor) => sensor.map((obj) => Object.assign({}, {...obj, dateTime: moment(obj.dateTime).format(precision === 'days' ? "MM-DD" : "MM-DD HH:00")})));
-        const labelDates = sesnorData ?sesnorData.map((sensor) => [...new Set(sensor.map((obj) =>  obj.dateTime).sort())]) : [];
+        const sesnorData = 
+        sensor[label]
+            .map((sensor) => {
+              const newArray = sensor.map((obj) => Object.assign({}, {value: obj.value, dateTime: moment(obj.dateTime).format(precision === 'days' ? "MM-DD" : "MM-DD HH:00")})
+            );
+            
+            const reduced = newArray.reduce(function(m, d){
+                if(!m[d.dateTime]){
+                  m[d.dateTime] = {dateTime: d.dateTime, value: parseFloat(d.value), count: 1};
+                  return m;
+                }
+                m[d.dateTime].value += parseFloat(d.value);
+                console.log(parseFloat(d.value), 'd.value')
+                console.log(m[d.dateTime].value, 'currentValue')
+                m[d.dateTime].count += 1;
+                return m;
+             },{});
+
+             const result = Object.keys(reduced).map(function(k){
+                const item  = reduced[k];
+                return {
+                    dateTime: item.dateTime,
+                    value: item.value/item.count
+                }
+            })
+
+                return result;
+            });
+        const labelDates = sesnorData ? sesnorData.map((sensor) => [...new Set(sensor.map((obj) =>  obj.dateTime).sort())]) : [];
         labels.add(...labelDates);
-        return createDataset(label, sesnorData.flat())});
+        return createDataset(label, sesnorData.flat())
+    });
 
     console.log(Array.from(labels),'labels');
     console.log(datasets,'datasets');

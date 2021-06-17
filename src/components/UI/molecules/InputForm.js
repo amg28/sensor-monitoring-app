@@ -6,6 +6,8 @@ import RoomSelect from '../atoms/RoomSelect'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSensor, roomsSelector, updateFromDateTime, updateToDateTime } from '../../../store/roomsSlice';
 import PrecisionSelect from '../atoms/PrecisionSelect';
+import AverageConsumption from '../atoms/AverageConsumption';
+import TimePeriodDifference from '../atoms/TimePeriodDifference';
 
 const useStyles = makeStyles((theme) => ({
     timeContainer: {
@@ -13,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-evenly',
         height: '100%'
+    }, 
+    additionalFeaturesWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        height: '20%'
     }
 }));
 
@@ -36,6 +43,11 @@ function InputForm() {
             <RoomSelect roomsData={roomsData} rooms={roomsList} />
             <Divider />
             <PrecisionSelect />
+            <Divider />
+            <div className={classes.additionalFeaturesWrapper}>
+                <AverageConsumption />
+                <TimePeriodDifference />
+            </div>
             <Divider />
             <Button onClick={handleClick}>Update chart</Button>
         </div>

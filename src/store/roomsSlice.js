@@ -18,6 +18,11 @@ export const fetchRooms = createAsyncThunk('rooms/fetch', async () => {
     return response.data;
 })
 
+export const addRoom = createAsyncThunk('rooms/addRoom', async (newRoomObject, thunkAPI) => {
+    console.log(newRoomObject,'newRoomObject');
+    const response = await axios.put('/sensors',newRoomObject)
+})
+
 export const addNewSensor = createAsyncThunk('sensors', async (dispatch, { getState }) => {
     const store = getState();
     const { sensorType, selectedRooms } = store.rooms;
@@ -82,6 +87,9 @@ const roomsSlice = createSlice({
         },
         [fetchSensor.fulfilled]: (state, action) => {
             return { ...state, sensorsData: action.payload }
+        },
+        [fetchSensor.rejected]: (state, action) => {
+            return { ...state, roomsData: action.payload }
         }
     }
 })
