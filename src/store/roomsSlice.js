@@ -23,6 +23,10 @@ export const addRoom = createAsyncThunk('rooms/addRoom', async (newRoomObject, t
     const response = await axios.put('/sensors',newRoomObject)
 })
 
+export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (roomId, thunkAPI) => {
+    await axios.delete('/sensors', {data:{roomId: roomId}})
+})
+
 export const addNewSensor = createAsyncThunk('sensors', async (dispatch, { getState }) => {
     const store = getState();
     const { sensorType, selectedRooms } = store.rooms;
@@ -32,6 +36,40 @@ export const addNewSensor = createAsyncThunk('sensors', async (dispatch, { getSt
         const request = axios.post(`/sensorValues?sensorType=${sensorType}&roomId=${room._id}`);
         const {data: requestData} = await request;
     }
+})
+
+
+// {
+// 	"roomId": "60cbd0f5018865001d62390f",
+// 	"roomName": "POIC_7",
+//   "sensors": [
+//     {
+//       "sensorType": "temperatureSensor",
+//       "sensorId": "1234"
+//     },
+// 		    {
+//       "sensorType": "temperatureSensor",
+//       "sensorId": "1234"
+//     },
+// 		    {
+//       "sensorType": "temperatureSensor",
+//       "sensorId": "1234"
+//     }
+//   ]
+// }
+
+export const addSensor = createAsyncThunk('sensors/addSensor', async (newSensorObject, { getState }) => {
+    const {roomName, sensor} = newSensorObject;
+    const store = getState();
+    const room = store.rooms.roomsData.filter((room) => room.roomName === roomName)[0];
+    const object = {roomId: room._id, roomName: roomName, sensors: [...room.sensors, sensor]};
+    await axios.put('/sensors', object)
+})
+
+export const deleteSensor = createAsyncThunk('sensors/addSensor', async (sensor, { getState }) => {
+    const {_id, roomName, sensors} = getState().rooms.roomsData.filter((room) => room.roomName === sensor.room)[0];
+    const sensorList = sensors.filter((s) => s._id !== sensor.id)
+    await axios.put('/sensors', {roomId: _id, roomName: roomName, sensors: sensorList})
 })
 
 export const fetchSensor = createAsyncThunk('sensors/fetch', async (dispatch, { getState }) => {
