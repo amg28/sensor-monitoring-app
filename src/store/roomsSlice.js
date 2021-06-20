@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from 'axios'
-import Floor1 from "../components/UI/atoms/Floor1"
 
 const initialState = {
     sensorType: '',

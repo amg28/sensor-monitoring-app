@@ -9,7 +9,7 @@ import { green, orange, pink, blue } from '@material-ui/core/colors';
 
 function Floor2(props) {
 
-   let title = "Sensoru nav";
+  const title = "Click on me to see all sensors"
 
   const roomsData = useSelector(roomsSelector);
   console.log(roomsData, "roomsData");
