@@ -12,11 +12,6 @@ const initialState = {
     actualFloor: 0
 }
 
-export const fetchRooms = createAsyncThunk('rooms/fetch', async () => {
-    const response = await axios.get('/sensors')
-    return response.data;
-})
-
 export const addRoom = createAsyncThunk('rooms/addRoom', async (newRoomObject, thunkAPI) => {
     console.log(newRoomObject,'newRoomObject');
     const response = await axios.put('/sensors',newRoomObject)
@@ -26,36 +21,10 @@ export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (roomId, th
     await axios.delete('/sensors', {data:{roomId: roomId}})
 })
 
-export const addNewSensor = createAsyncThunk('sensors', async (dispatch, { getState }) => {
-    const store = getState();
-    const { sensorType, selectedRooms } = store.rooms;
- 
-    const resultData = [];
-    for(let room of selectedRooms){
-        const request = axios.post(`/sensorValues?sensorType=${sensorType}&roomId=${room._id}`);
-        const {data: requestData} = await request;
-    }
+export const fetchRooms = createAsyncThunk('rooms/fetch', async () => {
+    const response = await axios.get('/sensors')
+    return response.data;
 })
-
-
-// {
-// 	"roomId": "60cbd0f5018865001d62390f",
-// 	"roomName": "POIC_7",
-//   "sensors": [
-//     {
-//       "sensorType": "temperatureSensor",
-//       "sensorId": "1234"
-//     },
-// 		    {
-//       "sensorType": "temperatureSensor",
-//       "sensorId": "1234"
-//     },
-// 		    {
-//       "sensorType": "temperatureSensor",
-//       "sensorId": "1234"
-//     }
-//   ]
-// }
 
 export const addSensor = createAsyncThunk('sensors/addSensor', async (newSensorObject, { getState }) => {
     const {roomName, sensor} = newSensorObject;
@@ -81,13 +50,44 @@ export const fetchSensor = createAsyncThunk('sensors/fetch', async (dispatch, { 
         const {data: requestData} = await request;
         resultData.push({[room.roomName] : [requestData]});
     }
-    // const roomOne = axios.get(`/sensorValues?sensorType=${sensorType}&dateTimeFrom=${dateTimeFrom}&dateTimeTo=${dateTimeTo}&roomId=${selectedRooms[0]._id}`);
-    // const roomTwo = axios.get(`/sensorValues?sensorType=${sensorType}&dateTimeFrom=${dateTimeFrom}&dateTimeTo=${dateTimeTo}&roomId=${selectedRooms[1]._id}`);
-
-    // const {data: roomOneData} = await roomOne;
-    // const {data: roomTwoData} = await roomTwo;
 
     return resultData;
+})
+
+export const addWarning = createAsyncThunk('warnings/addWarnings', async (newWarningObject, { getState }) => {
+    const {roomName, warning} = newWarningObject;
+    const store = getState();
+    const room = store.rooms.roomsData.filter((room) => room.roomName === roomName)[0];
+    const roomId = room._id;
+    const workingObject = {roomId: roomId, warnings: [...room.warnings, {warningText: warning.warningText, threshold: warning.warningThreshold}]};
+    const response = await axios.put('/sensors/warnings', workingObject);
+})
+
+export const deleteWarning = createAsyncThunk('warnings/deleteWarnings', async (deletedWarningObject, { getState }) => {
+    const {roomName, warningId} = deletedWarningObject;
+    const store = getState();
+    const room = store.rooms.roomsData.filter((room) => room.roomName === roomName)[0];
+    const updatedWarningsList = room.warnings.filter((warning) => warning._id !== warningId);
+    const workingObject = {roomId: room._id, warnings: [...updatedWarningsList]};
+    const response = await axios.put('/sensors/warnings', workingObject);
+})
+
+export const addSensorWarning = createAsyncThunk('warnings/addSensorWarnings', async (newWarningObject, { getState }) => {
+    const {roomName, sensorId, warning} = newWarningObject;
+    const store = getState();
+    const room = store.rooms.roomsData.filter((room) => room.roomName === roomName)[0];
+    const roomId = room._id;
+    const sensor = room.sensors.filter((si) => si.sensorId === sensorId)[0];
+    const response = await axios.put('/sensors/warnings', {roomId: roomId, sensorId: sensor._id, warnings: [...sensor.warnings, {warningText: warning.warningText, threshold: warning.warningThreshold}]});
+})
+
+export const deleteSensorWarning = createAsyncThunk('warnings/deleteSensorWarnings', async (deletedWarningObject, { getState }) => {
+    const {roomName, sensorId, warningId} = deletedWarningObject;
+    const store = getState();
+    const room = store.rooms.roomsData.filter((room) => room.roomName === roomName)[0];
+    const sensor = room.sensors.filter((si) => si._id === sensorId)[0];
+    const updatedWarningsList = sensor.warnings.filter((warning) => warning._id !== warningId);
+    const response = await axios.put('/sensors/warnings', {roomId: room._id, sensorId: sensorId, warnings: [...updatedWarningsList]});
 })
 
 const roomsSlice = createSlice({

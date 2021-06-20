@@ -9,6 +9,14 @@ module.exports = function (app) {
     )
 
     app.use(
+        '/sensors/warnings',
+        createProxyMiddleware({
+            target: 'http://localhost:8080',
+            changeOrigin: true
+        })
+    )
+
+    app.use(
         '/sensorValues',
         createProxyMiddleware({
             target: 'http://localhost:8080',

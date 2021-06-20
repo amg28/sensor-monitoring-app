@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core'
 import { DataGrid } from '@material-ui/data-grid'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { roomsSelector } from '../../../store/roomsSlice';
+import { fetchRooms, roomsSelector } from '../../../store/roomsSlice';
 import { fetchWarnings } from '../../../store/warningsSlice';
 
 function WarningsOverview() {
@@ -11,7 +11,7 @@ function WarningsOverview() {
     const sensorData = useSelector(roomsSelector);
 
     useEffect(() => {
-        dispatch(fetchWarnings())
+        dispatch(fetchRooms())
     }, [dispatch])
 
     const rows = sensorData.map(({ sensors, roomName }) => {
@@ -29,6 +29,7 @@ function WarningsOverview() {
 
     return (
         <div>
+            Test
             <Typography variant="h4" strong>Configuration</Typography>
             <DataGrid rows={rows} columns={columns} autoHeight />
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from "react";
 import floor2Plan from "../media/2floor-final.png";
 import "../../../main.css";
