@@ -6,6 +6,7 @@ import FullPageLayout from '../UI/templates/FullPageLayout';
 import WarningsConfiguration from '../UI/organisms/WarningsConfiguration';
 import { fetchRooms, roomsSelector } from '../../store/roomsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import WarningsMonitoring from '../UI/organisms/WarningsMonitoring';
 
 function Warnings() {
 
@@ -16,7 +17,7 @@ function Warnings() {
     // }, [dispatch])
 
     const warningsConfiguration = [<WarningsConfiguration />];
-    const warningsMonitoring = <warningsMonitoring />;
+    const warningsMonitoring = <WarningsMonitoring />;
 
     return (
 

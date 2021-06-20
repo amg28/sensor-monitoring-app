@@ -8,6 +8,7 @@ const initialState = {
     selectedRooms: [],
     roomsData: [],
     sensorsData: [],
+    warnings: [],
     precision: 'days',
     actualFloor: 0
 }
@@ -90,6 +91,12 @@ export const deleteSensorWarning = createAsyncThunk('warnings/deleteSensorWarnin
     const response = await axios.put('/sensors/warnings', {roomId: room._id, sensorId: sensorId, warnings: [...updatedWarningsList]});
 })
 
+export const fetchWarnings = createAsyncThunk('warnings/fetch', async () => {
+    console.log('test');
+    const response = await axios.get('/sensors/warnings')
+    return response.data;
+})
+
 const roomsSlice = createSlice({
     name: 'rooms',
     initialState,
@@ -127,7 +134,10 @@ const roomsSlice = createSlice({
         },
         [fetchSensor.rejected]: (state, action) => {
             return { ...state, roomsData: action.payload }
-        }
+        },
+        [fetchWarnings.fulfilled]: (state, action) => {
+            return { ...state, warnings: action.payload }
+        },
     }
 })
 
@@ -137,4 +147,5 @@ export const selectedRoomsSelector = (state) => state.rooms.selectedRooms;
 export const sensorDataSelector = (state) => state.rooms.sensorsData;
 export const precisionSelector = (state) => state.rooms.precision;
 export const actualFloorSelector = (state) => state.rooms.actualFloor;
+export const warningsSelector = (state) => state.rooms.warnings;
 export default roomsSlice.reducer
